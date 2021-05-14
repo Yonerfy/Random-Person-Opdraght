@@ -3,29 +3,49 @@ const countryList = function () {
 }
 
 const capricornWomen = function () {
-    const womans = randomPersonData.filter(woman => woman.gender === "female").filter(age => age.age > 30).filter(date =>
+    return randomPersonData.filter(woman => woman.gender === "female").filter(age => age.age > 30).filter(date =>
         date.birthday.mdy <= "01/19/" || date.birthday.mdy >= "12/22/");
-    return womans.map(woman => `${woman.name} ${woman.surname} `)
 }
 
-const addDataToList = function (data) {
+const addDataToListCapriWomen = function (data, imgSrc) {
     const ul = document.querySelector(".list-data");
-    const li = document.createElement("li")
+    const li = document.createElement("li");
+    const img = document.createElement("img");
+    img.src = imgSrc
+    ul.append(li);
+    li.append(data, img);
+}
+
+const addDataToListCountry = function (data) {
+    const ul = document.querySelector(".list-data");
+    const li = document.createElement("li");
     ul.append(li);
     li.append(data);
 }
 
-const buttonsEvent = function (id, callback) {
+const buttonsEventCapriwoman = function (id, callback) {
     const ul = document.querySelector(".list-data");
     const btnList = document.getElementById(id);
     btnList.addEventListener("click", function () {
         const data = callback();
         ul.innerHTML = "";
         data.forEach(element => {
-            addDataToList(element);
+            addDataToListCapriWomen(element.surname, element.photo);
         })
     })
 }
-buttonsEvent("country", countryList);
-buttonsEvent("capriwoman", capricornWomen);
+const buttonsEventCountry = function (id, callback) {
+    const ul = document.querySelector(".list-data");
+    const btnList = document.getElementById(id);
+    btnList.addEventListener("click", function () {
+        const data = callback();
+        ul.innerHTML = "";
+        data.forEach(element => {
+            addDataToListCountry(element);
+        })
+    })
+}
+buttonsEventCountry("country", countryList);
+buttonsEventCapriwoman("capriwoman", capricornWomen);
+console.log(randomPersonData);
 
